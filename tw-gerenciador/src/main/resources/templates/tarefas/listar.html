@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Gerenciador de tarefas listagem</title>
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+	<div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+	<div class="container">
+		<h3>Listagem de terefas</h3>
+		<a href="/tarefas/inserir" class="btn btn-success">Inserir nova tarefa</a>
+		<div th:each="tarefa: ${tarefas}" style="margin: 10px">
+			<div class="card bg-light mb-3">
+				<div class="card-header" th:text="${tarefa.titulo}"></div>
+				<div class="card-bady">
+					<p class="card-text" th:text="${tarefa.descricao}"></p>
+					<p class="card-text" th:text="${'Data de expiracao: ' + #dates.format(tarefa.dataExpiracao,'dd/MM/yyyy')}"></p>
+				</div>
+				<div class="card -footer bg-light">
+					<p>
+						<a class="badge badge-dark" th:href="@{/tarefas/alterar/{id}(id=${tarefa.id})}"> Alterar</a>
+						<a class="badge badge-dark" th:href="@{/tarefas/excluir/{id} (id=${tarefa.id})}">Excluir</a> |
+						<a class="badge badge-dark" th:if="${!tarefa.concluida}" th:href="@{/tarefas/concluir/{id} (id=${tarefa.id})}">concluir</a>
+                    	<a class="badge badge-success" th:if="${tarefa.concluida}" th:href="@{/tarefas/concluir/{id} (id=${tarefa.id})}">Tarefa concluida</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
